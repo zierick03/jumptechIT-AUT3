@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-bot
+  namespace: test-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-bot
+  template:
+    metadata:
+      labels:
+        app: test-bot
+    spec:
+      containers:
+      - name: test-bot
+        image: zierick03/testbot:latest
+        imagePullPolicy: Always
+        env:
+        - name: DISCORD_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: bot-secret
+              key: token

@@ -1,9 +1,15 @@
-FROM python:3.11-slim
+# Basisimage met Python
+FROM python:3.14-slim
 
+# Maak een werkdirectory
 WORKDIR /app
 
-COPY . /app
+# Kopieer requirements.txt en installeer dependencies (optioneel)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt || true
+# Kopieer de code naar de container
+COPY test.py .
 
+# Stel de default command in om je script te draaien
 CMD ["python", "test.py"]
